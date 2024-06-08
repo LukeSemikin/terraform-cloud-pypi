@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "tfcloud_sdk_LukeSemikin"
+version = "0.0.1-pre"
+authors = [
+  { name="LukeSemikin", email="LukeSemikin@gmail.com" },
+]
+description = "Terraform Cloud SDK"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["requests"]
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
+[tool.coverage.run]
+source = ["."]
+branch = true 
+include = ["src/tfcloud_sdk/*"]
+command_line = "-m unittest discover"
+
+[tool.coverage.report]
+fail_under = 80
