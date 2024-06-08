@@ -13,6 +13,7 @@ jobs:
 
   coverage:
     runs-on: ubuntu-latest
+    environment: coverage_test
     steps:
 
       - name: Checkout Repository
@@ -26,6 +27,8 @@ jobs:
       - name: Run UnitTest
         run: |
           coverage run -m unittest discover
+        env:
+          tf_access_token: ${{ secrets.TF_ACCESS_TOKEN }}
 
       - name: Output Report 
         run: |

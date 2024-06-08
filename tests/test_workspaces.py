@@ -1,4 +1,4 @@
-from src.terraform_cloud.workspaces import Workspaces
+from src.tfcloud_sdk.workspaces import Workspaces
 from os import environ
 from unittest import main, TestCase, skip
 from json import loads
