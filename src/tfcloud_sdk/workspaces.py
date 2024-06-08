@@ -51,43 +51,49 @@ class Workspaces:
     
 
     def workspace_validation_set(self, kwargs):
-        vcs_labels, settings_labels, data_labels, attributes_labels = self.workspace_labels()
-        all_labels = vcs_labels + settings_labels + data_labels + attributes_labels
-        for key, value in args:
-            if key not in all_labels:
-                print(f"Key: {key} not recognised")
-                exit(125)
+        if kwargs is None:
+            return
+        else:
+            vcs_labels, settings_labels, data_labels, attributes_labels = self.workspace_labels()
+            all_labels = vcs_labels + settings_labels + data_labels + attributes_labels
+            for key, value in kwargs:
+                if key not in all_labels:
+                    print(f"Key: {key} not recognised")
+                    exit(125)
 
-    def form_data_set(self, name, args):
-        vcs_labels, settings_labels, data_labels, attributes_labels = self.workspace_labels()
-        attributes = {
-            "name": name
-        }
-        data = {}
-        settings = {}
-        vcs = {}
-        for key, value in args:
-            if key in attributes_labels:
-                attributes.update(key, value)
-            elif key in data_labels:
-                data.update(key, value)
-            elif key in vcs_labels:
-                vcs.update(key, value)
-            elif key in settings_labels:
-                settings.update(key, value)
-        if settings is not None: 
-            attributes.update({"setting-overwrites": settings})
-        if vcs is not None: 
-            attributes.update({"vcs-repo": vcs})
-        payload = {
-            "data": {
-                "type": "workspace",
-                "attributes": attributes
+    def form_data_set(self, name, kwargs):
+        if kwargs is None:
+            return
+        else:
+            vcs_labels, settings_labels, data_labels, attributes_labels = self.workspace_labels()
+            attributes = {
+                "name": name
             }
-        }
-        if data is not None:
-            payload.update({"relationships": { "projects": { "data": data } }})
-        return dumps(payload)
+            data = {}
+            settings = {}
+            vcs = {}
+            for key, value in kwargs:
+                if key in attributes_labels:
+                    attributes.update(key, value)
+                elif key in data_labels:
+                    data.update(key, value)
+                elif key in vcs_labels:
+                    vcs.update(key, value)
+                elif key in settings_labels:
+                    settings.update(key, value)
+            if settings is not None: 
+                attributes.update({"setting-overwrites": settings})
+            if vcs is not None: 
+                attributes.update({"vcs-repo": vcs})
+            payload = {
+                "data": {
+                    "type": "workspace",
+                    "attributes": attributes
+                }
+            }
+            if data is not None:
+                payload.update({"relationships": { "projects": { "data": data } }})
+            return dumps(payload)
     
     def form_tags_dataset(self, new_tags):
         tags = {}
@@ -131,8 +137,8 @@ class Workspaces:
     
 #Post Requests
     
-    def create_workspace(self, name, kwargs):
-        self.workspace_validation_set()
+    def create_workspace(self, name, kwargs=None):
+        self.workspace_validation_set(kwargs)
         payload = self.form_data_set(name, kwargs)
         url = f"{self.base_url}organizations/{self.organisation}/workspaces"
         return self.tf_session.post(data=payload, url=url)
@@ -181,9 +187,9 @@ class Workspaces:
 
 #Patch Requests
     
-    def update_workspace(self, name, **kwargs):
+    def update_workspace(self, name, kwargs=None):
         self.workspace_validation_set()
-        payload = self.form_data_set(name, **kwargs)
+        payload = self.form_data_set(name, kwargs)
         url = f"{self.base_url}organizations/{self.organisation}/workspaces"
         return self.tf_session.patch(data=payload, url=url)
 
