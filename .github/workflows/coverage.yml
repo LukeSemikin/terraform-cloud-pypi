@@ -21,6 +21,7 @@ jobs:
       - name: Install Requirements
         run: |
           sudo apt install python3 python3-pip pipenv
+          pip3 install --upgrade pip wheel setuptools requests
           pipenv run install -d 
 
       - name: Run UnitTest
