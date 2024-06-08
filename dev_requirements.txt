@@ -1,0 +1,10 @@
+-i https://pypi.org/simple
+build==1.2.1; python_version >= '3.8'
+coverage==7.5.3; python_version >= '3.8'
+packaging==24.0; python_version >= '3.7'
+pyproject-hooks==1.1.0; python_version >= '3.7'
+certifi==2024.6.2; python_version >= '3.6'
+charset-normalizer==3.3.2; python_full_version >= '3.7.0'
+idna==3.7; python_version >= '3.5'
+requests==2.32.3; python_version >= '3.8'
+urllib3==2.2.1; python_version >= '3.8'

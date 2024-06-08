@@ -1,0 +1,17 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - LukeSemikin
+  categories:
+    - title: Breaking Changes 🛠
+      labels:
+        - Major
+    - title: Exciting New Features 🎉
+      labels:
+        - Minor
+        - Enhancement
+    - title: Other Changes
+      labels:
+        - "*"
